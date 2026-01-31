@@ -71,6 +71,10 @@ PRODUCT_PACKAGES += \
     FrameworkOverlayCustom \
     SettingsOverlayCustom
 
+PRODUCT_PACKAGES += \
+    uwuNTPServerOverlay \
+    uwuCaptiveServerOverlay
+
 # TouchGesture
 PRODUCT_PACKAGES += \
     TouchGestures
