@@ -84,7 +84,8 @@ PRODUCT_PACKAGES += \
     uwuSettingsExt \
     LyricFetchExt \
     uwuClock \
-    uwuSystemUI
+    uwuSystemUI \
+    CatShare
 
 # Updater
 include vendor/custom/config/ota.mk
