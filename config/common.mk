@@ -84,8 +84,12 @@ PRODUCT_PACKAGES += \
     uwuSettingsExt \
     LyricFetchExt \
     uwuClock \
-    uwuSystemUI \
     CatShare
+
+ifneq ($(TARGET_IS_TABLET),true)
+PRODUCT_PACKAGES += \
+    uwuSystemUI
+endif
 
 # Updater
 include vendor/custom/config/ota.mk
