@@ -205,20 +205,6 @@ function dddclient()
    fi
 }
 
-function enable_ccache() 
-{
-    local ccache_dir="$HOME/CCACHE/.ccache"
-    if [[ ! -d "$ccache_dir" ]]; then
-        echo -e "\e[34m[INFO]\e[0m Creating ccache directory at $ccache_dir"
-        mkdir -p "$ccache_dir"
-    fi
-    export USE_CCACHE=1
-    export CCACHE_EXEC="$(command -v ccache)"
-    export CCACHE_DIR="$ccache_dir"
-    export CCACHE_NOCOMPRESS=true
-    echo -e "\e[32m[INFO]\e[0m ccache enabled using directory $ccache_dir"
-}
-
 function pixelosremote()
 {
     if ! git rev-parse --git-dir &> /dev/null
@@ -939,6 +925,37 @@ function fixup_common_out_dir() {
         [ -L ${common_out_dir} ] && rm ${common_out_dir}
         mkdir -p ${common_out_dir}
     fi
+}
+
+function enable_ccache()
+{
+    if [[ -z "$CCACHE_DIR" ]]; then
+        local existing_config
+        existing_config="$(ccache -p 2>/dev/null | grep -i 'cache_dir' | awk '{print $NF}')"
+
+        if [[ -d "$existing_config" ]]; then
+            export CCACHE_DIR="$existing_config"
+        else
+            export CCACHE_DIR="$HOME/CCACHE/.ccache"
+        fi
+    fi
+
+    if [[ ! -d "$CCACHE_DIR" ]]; then
+        echo -e "\e[34m[INFO]\e[0m Creating ccache directory at $CCACHE_DIR"
+        mkdir -p "$CCACHE_DIR"
+    fi
+
+    export USE_CCACHE=1
+
+    if [[ -z "$CCACHE_EXEC" ]]; then
+        export CCACHE_EXEC="$(command -v ccache)"
+    fi
+
+    if [[ -z "$CCACHE_NOCOMPRESS" ]]; then
+        export CCACHE_NOCOMPRESS=true
+    fi
+
+    echo -e "\e[32m[INFO]\e[0m ccache enabled using directory $CCACHE_DIR"
 }
 
 enable_ccache
