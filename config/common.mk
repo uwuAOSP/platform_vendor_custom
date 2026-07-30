@@ -90,7 +90,8 @@ PRODUCT_PACKAGES += \
     LyricFetchExt \
     uwuClock \
     CatShare \
-    uwuAICore
+    uwuAICore \
+    uwuPrism
 
 ifneq ($(TARGET_IS_TABLET),true)
 PRODUCT_PACKAGES += \
